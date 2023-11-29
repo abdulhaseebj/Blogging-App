@@ -7,7 +7,7 @@
 .main-div-signup{
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 .main-div-login{
     display: flex;
@@ -15,8 +15,7 @@
     margin-top: 60px;
 }
 .signup-container {
-    /* padding: 30px; */
-    padding: 0px 20px 20px 20px ;
+    padding: 30px;
     width: 350px;
     box-sizing: border-box;
 }
