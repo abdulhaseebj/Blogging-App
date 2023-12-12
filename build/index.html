@@ -1,3 +1,4 @@
+<html>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,57 +16,46 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Apply background color to the entire body with !important */
+        body {
+            background-color: #e7ebee !important;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="home-main-div bg-[#e7ebee]">
+    <div>
         <!-- navbar area start -->
         <div class="navbar bg-teal-950">
             <div class="navbar flex justify-between ">
                 <h2 class="text-slate-200 text-xl ml-11">Personal Blogging App</h2>
-                <!-- <img src="./assets/navbar logo.png" width="150px" alt=""> -->
-                <a href="./signup.html" class="text-slate-200 text-xl mr-11 hover:text-orange-300">SignUp</a>
+                <div class="flex justify-center">
+                    <a href="./dashboard.html "
+                        class="dashboardBtn text-slate-200 text-xl mr-11 hover:text-orange-300 ">Dashboard</a>
+                    <a href="./profile.html"
+                        class="profileBtn text-slate-200 text-xl mr-11 hover:text-orange-300  ">Profile</a>
+                    <button class="logoutBtn text-slate-200 text-xl mr-11 hover:text-orange-300 ">Logout</button>
+                </div>
+
             </div>
+
         </div>
         <div class="bg-teal-800 w-full h-16 flex items-center">
-            <h2 class="ml-20  text-slate-200 text-2xl">LogIn</h2>
+            <h2 class="ml-20  text-slate-200 text-2xl wish"></h2>
         </div>
         <!-- navbar area end -->
-        <!-- login area start -->
-        <div class="main-div-login">
-            <div class="login login-container bg-white rounded-2xl shadow-1">
-                <form class="form">
-                    <div class="flex justify-center">
-                        <img src="./assets/Screenshot_2023-11-29_035605-removebg-preview.png"
-                            class="w-[200px]" alt="">
-                    </div>
-                    <div class="flex justify-center">
-                        <input type="email" placeholder="Email"
-                            class="email input input-bordered input-md w-full max-w-xs " required/>
-                    </div>
-                    <div class="flex justify-center">
-                        <input type="password" placeholder="Password"
-                            class="password input input-bordered input-md w-full max-w-xs mt-4" />
-                    </div>
+        <!-- all blog render area start -->
+        <div class="main-div-signup">
+            <div class="render">
 
-                    <div class="flex justify-center">
-                        <button
-                            class="bg-teal-800 text-slate-200 px-7 py-3 rounded-md mt-5 hover:px-9 hover:bg-teal-900">LogIn</button>
-                    </div>
-
-                </form>
             </div>
+
         </div>
-        <dialog id="my_modal_3" class="modal">
-            <div class="modal-box">
-                <form method="dialog">
-                    <button class="btn btn-sm  btn-ghost absolute right-2 top-2">✕</button>
-                </form>
-                <h3 class="font-bold text-lg">Hello!</h3>
-                <p class="py-4 " id="modal-message">Password are not same!</p>
-            </div>
-        </dialog>
-        <!-- login area end -->
+
+        <!-- all blog render end start -->
 
     </div>
     <!-- javascript link -->

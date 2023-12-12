@@ -45,6 +45,7 @@
                 </div>
             </div>
             <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 ">
+                <li><a href="./index.html">Home</a></li>
                 <li><a href="./profile.html">Profile</a></li>
                 <li><button class="logout-btn">Logout</button></li>
             </ul>
@@ -63,32 +64,32 @@
             <form class="form">
                 <div>
                     <div class="flex justify-center">
-                        <input type="text" placeholder="Type here"
-                            class="blog-input input input-bordered mt-6 w-[250px] sm:w-[450px] md:w-[600] lg:w-[700px] "
-                            pattern=".{5,50}" required />
+                        <input type="text" required minlength="5" maxlength="50" placeholder="Type here"
+                            class="blog-input input input-bordered mt-6 w-[250px] sm:w-[450px] md:w-[600] lg:w-[700px] " />
                     </div>
                     <div class="flex justify-center">
-                        <textarea
+                        <textarea required minlength="30" maxlength="170"
                             class="blog-textarea textarea textarea-bordered mt-3 w-[250px] sm:w-[450px] md:w-[600] lg:w-[700px] "
-                            placeholder="What is your mind" minlength="100" maxlength="3000" required></textarea>
+                            placeholder="What is your mind"></textarea>
+                        <!-- <textarea placeholder="What's on your mind" id="caption" minlength="30" maxlength="130"
+                            class=" blog-textarea textarea textarea-bordered textarea-lg w-full focus:border-[#7749F8]"></textarea> -->
                     </div>
                     <div class="pl-[7px] lg:pl-8">
                         <button
                             class="publish-btn bg-teal-800 text-slate-200 px-7 py-3 rounded-md mt-3  hover:bg-teal-900">Publish
                             Blog</button>
-
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <!-- publish blog area end -->
-    <h2 class="text-3xl font-bold text-center mt-10">My Blog</h2>
+    <h2 class="text-3xl font-bold text-center mt-10 ">My Blog</h2>
 
     <!-- my blog area start -->
     <div class="main-div-signup">
         <div class="render"></div>
-        
+
     </div>
     <!-- my blog area end -->
 

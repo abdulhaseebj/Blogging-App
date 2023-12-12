@@ -14,6 +14,7 @@ const render = document.querySelector('.render');
 
 let img;
 let names;
+let userobj;
 
 // user login or signup
 onAuthStateChanged(auth, async (user) => {
@@ -28,6 +29,7 @@ onAuthStateChanged(auth, async (user) => {
             profileImage.src = doc.data().profileUrl
             names = doc.data().names
             img = doc.data().profileUrl
+            userobj = doc.data()
         });
         getDataFromFirestore(uid)
     } else {
@@ -54,16 +56,18 @@ function renderPost() {
     render.innerHTML = ''
     arr.map((item) => {
         render.innerHTML += `<div
-        class="signup blog-container bg-white rounded-2xl shadow-1 w-[300px] sm:w-[500px] md:w-[650] lg:w-[800px] mt-8 sm:mt-11">
-        <div class="flex gap-4">
-        <img class="profileImage rounded-3xl w-[100px] mt-6" src="${img}" alt="">
+        class="signup  bg-white px-8  py-8 rounded-2xl shadow-1 w-[300px] sm:w-[500px] md:w-[650] lg:w-[800px] mt-8 mb-8">
+        <div class="flex gap-4 items-center" >
+        <img class="profileImage rounded-3xl w-[100px]" src="${img}" alt="">
         <div>
-        <h2 class="mt-6 font-black text-2xl pr-16">${item.Title}</h2>
-        <p class="mt-4">${names} - ${new Date(item.postDate.seconds / 100000).toLocaleString()}</p>
+        <h2 class="font-black text-2xl ">${item.Title}</h2>
+        <p class=" mt-3">${names} - ${formatDate(
+            item.postDate
+        )}</p>
             </div>
         </div>
         <p class="mt-3 pr-7">${item.Text}</p>
-        <div class="flex gap-6 mt-8">
+        <div class="flex gap-4 mt-6" >
         <button type="button" id="delete" >Delete</button>
         <button type="button" id="update" >Edit</button>
         </div>
@@ -131,9 +135,8 @@ publishBtn.addEventListener('click', async () => {
             Text: blogTextarea.value,
             Uid: auth.currentUser.uid,
             postDate: Timestamp.fromDate(new Date()),
-            // names:auth.currentUser
+            userobj
         });
-        console.log("Document written with ID: ", docRef.id);
         arr.push({
             uid: auth.currentUser.uid,
             Title: blogInput.value,
@@ -151,4 +154,12 @@ publishBtn.addEventListener('click', async () => {
 })
 
 
-
+function formatDate(timestamp) {
+    const dateObject = timestamp.toDate();
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
+    return dateObject.toLocaleDateString("en-US", options);
+}

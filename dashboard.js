@@ -14,6 +14,7 @@ const render = document.querySelector('.render');
 
 let img;
 let names;
+let userobj;
 
 // user login or signup
 onAuthStateChanged(auth, async (user) => {
@@ -28,6 +29,7 @@ onAuthStateChanged(auth, async (user) => {
             profileImage.src = doc.data().profileUrl
             names = doc.data().names
             img = doc.data().profileUrl
+            userobj = doc.data()
         });
         getDataFromFirestore(uid)
     } else {
@@ -53,102 +55,140 @@ const arr = []
 function renderPost() {
     render.innerHTML = ''
     arr.map((item) => {
-        render.innerHTML += `<div
-        class="signup blog-container bg-white rounded-2xl shadow-1 w-[300px] sm:w-[500px] md:w-[650] lg:w-[800px] mt-8 sm:mt-11">
-        <div class="flex gap-4">
-        <img class="profileImage rounded-3xl w-[100px] mt-6" src="${img}" alt="">
-        <div>
-        <h2 class="mt-6 font-black text-2xl pr-16">${item.Title}</h2>
-        <p class="mt-4">${names} - ${new Date(item.postDate.seconds / 100000).toLocaleString()}</p>
+        //     render.innerHTML += `<div class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 t-5">
+        //     <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto" src="${img}" alt="" width="384" height="512">
+        //     <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+        //     <div class="text-sky-500 dark:text-sky-400">
+        //     <h3>${names}</h3>
+        //     </div>
+        //       <div>
+        //         <h2 class="text-lg font-medium">${item.Title}
+        //         </h2>
+        //         <p class="text-lg font-medium">${item.Text}
+        //         </p>
+        //       </div>
+        //       <div class="font-medium">
+        //         <div class="text-slate-700 dark:text-slate-500">
+        //           <h3>${formatDate(
+        //                 item.postDate)}</h3>
+        //         </div>
+        //       </div>
+        //     </div>
+        //     <div class="flex gap-4 mt-6" >
+        //      <button type="button" id="delete" >Delete</button>
+        //      <button type="button" id="update" >Edit</button>
+        //      </div>
+        //   </div>
+        //     `
+        render.innerHTML += `<div class="signup  bg-white px-3 py-3 sm:px-4 sm:py-4 md:px-5 md:py-5 lg:px-7 lg:py-7 rounded-2xl shadow-1 w-[300px] sm:w-[500px] md:w-[650] mt-5 mb-5">
+            <div class="flex items-start gap-1">
+                <img class="profileImage rounded-full  w-[60px]" src="${img}" alt="">
+
+                    <div>
+                        <p class="text-xl font-black pl-1 mt-2 ">${names}</p>
+                        <p class="text-sm pl-1 text-slate-500">${formatDate(item.postDate)}</p>
+
+                    </div>
             </div>
-        </div>
-        <p class="mt-3 pr-7">${item.Text}</p>
-        <div class="flex gap-6 mt-8">
-        <button type="button" id="delete" >Delete</button>
-        <button type="button" id="update" >Edit</button>
-        </div>
-        
-        </div>
-        `
+            <div>
+
+                <h2 class="pl-1 mt-5 text-xl font-black">${item.Title}</h2>
+                <p class=" text-sm text-slate-500 pl-1 mt-3 mb-5">${item.Text}</p>
+            </div>
+
+            <hr class="text-slate-300  pl-1"><div class="flex justify-between  pl-1 mt-2" >
+                <button type="button" id="delete" >Delete</button>
+                <button type="button" id="update" >Edit</button>
+            </div><hr class="text-slate-300  pl-1 mt-2">
+                </div>`
+
+
 
 
     })
 
-    const del = document.querySelectorAll('#delete');
-    const upd = document.querySelectorAll('#update');
+                const del = document.querySelectorAll('#delete');
+                const upd = document.querySelectorAll('#update');
 
     del.forEach((btn, index) => {
-        btn.addEventListener('click', async () => {
-            console.log('delete called', arr[index]);
-            await deleteDoc(doc(db, "blog", arr[index].docId))
-                .then(() => {
-                    console.log('post deleted');
-                    arr.splice(index, 1);
-                    renderPost()
-                });
-        })
-    })
+                    btn.addEventListener('click', async () => {
+                        console.log('delete called', arr[index]);
+                        await deleteDoc(doc(db, "blog", arr[index].docId))
+                            .then(() => {
+                                console.log('post deleted');
+                                arr.splice(index, 1);
+                                renderPost()
+                            });
+                    })
+                })
     upd.forEach((btn, index) => {
-        btn.addEventListener('click', async () => {
-            console.log('update called', arr[index]);
-            const updatedTitle = prompt('Enter new Title', arr[index].Title);
-            const updatedText = prompt('Enter new Description', arr[index].Text);
-            await updateDoc(doc(db, "blog", arr[index].docId), {
-                Title: updatedTitle,
-                Text: updatedText,
-                postDate: Timestamp.fromDate(new Date()),
-            });
-            arr[index].Title = updatedTitle;
-            arr[index].Text = updatedText;
-            renderPost()
+                    btn.addEventListener('click', async () => {
+                        console.log('update called', arr[index]);
+                        const updatedTitle = prompt('Enter new Title', arr[index].Title);
+                        const updatedText = prompt('Enter new Description', arr[index].Text);
+                        await updateDoc(doc(db, "blog", arr[index].docId), {
+                            Title: updatedTitle,
+                            Text: updatedText,
+                            postDate: Timestamp.fromDate(new Date()),
+                        });
+                        arr[index].Title = updatedTitle;
+                        arr[index].Text = updatedText;
+                        renderPost()
 
-        })
-    })
+                    })
+                })
 }
 
 
 
 
-// get data from firestore
-async function getDataFromFirestore(uid) {
+                // get data from firestore
+                async function getDataFromFirestore(uid) {
     const q = query(collection(db, "blog"), where("Uid", "==", uid));
-    const querySnapshot = await getDocs(q);
+                const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        console.log(doc.data());
-        arr.push({ ...doc.data(), docId: doc.id });
+                    console.log(doc.data());
+                arr.push({...doc.data(), docId: doc.id });
     });
-    renderPost()
+                renderPost()
 
 }
-console.log(arr);
+                console.log(arr);
 
 
 // data add on firestore
 publishBtn.addEventListener('click', async () => {
     try {
         const docRef = await addDoc(collection(db, "blog"), {
-            Title: blogInput.value,
-            Text: blogTextarea.value,
-            Uid: auth.currentUser.uid,
-            postDate: Timestamp.fromDate(new Date()),
-            // names:auth.currentUser
+                    Title: blogInput.value,
+                Text: blogTextarea.value,
+                Uid: auth.currentUser.uid,
+                postDate: Timestamp.fromDate(new Date()),
+                userobj
         });
-        console.log("Document written with ID: ", docRef.id);
-        arr.push({
-            uid: auth.currentUser.uid,
-            Title: blogInput.value,
-            Text: blogTextarea.value,
-            postDate: Timestamp.fromDate(new Date()),
-            docId: docRef.id,
+                arr.push({
+                    uid: auth.currentUser.uid,
+                Title: blogInput.value,
+                Text: blogTextarea.value,
+                postDate: Timestamp.fromDate(new Date()),
+                docId: docRef.id,
         });
-        renderPost()
+                renderPost()
 
     } catch (e) {
-        console.error("Error adding document: ", e);
+                    console.error("Error adding document: ", e);
     }
-    blogInput.value = ''
-    blogTextarea.value = ''
+                blogInput.value = ''
+                blogTextarea.value = ''
 })
 
 
-
+                function formatDate(timestamp) {
+    const dateObject = timestamp.toDate();
+                const options = {
+                    year: "numeric",
+                month: "long",
+                day: "numeric",
+    };
+                return dateObject.toLocaleDateString("en-US", options);
+}
